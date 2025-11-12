@@ -22,14 +22,14 @@ import { NAVIGATE_PATHS } from "../constants/Paths";
 import { PROJECT_NAME } from "../constants/Constants";
 import { useAuthentication } from "../contexts/authentication/AuthenticationContext";
 import { useTheme } from "@mui/material/styles";
-import { ColorModeContext } from "../contexts/theme/ColorModeContext";
+import { ThemeContext } from "../contexts/theme/ThemeContext";
 
 const Header: React.FC = () => {
     const { sessionUser } = useAuthentication();
     const navigate = useNavigate();
     const [drawerOpen, setDrawerOpen] = useState(false);
     const theme = useTheme();
-    const colorMode = useContext(ColorModeContext);
+    const colorMode = useContext(ThemeContext);
 
     return (
         <>

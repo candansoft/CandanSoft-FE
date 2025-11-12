@@ -1,4 +1,5 @@
 export const NAVIGATE_PATHS = {
+    HOMEPAGE: "/",
     LOGIN: "/login",
     LOGOUT: "/logout",
     DASHBOARD: "/dashboard",

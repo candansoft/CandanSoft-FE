@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Container,
     Box,
@@ -10,11 +11,10 @@ import {
     Alert,
     CircularProgress,
 } from '@mui/material';
-import { NAVIGATE_PATHS, SERVICE_PATHS } from '../../constants/Paths';
-import BaseApiAxios from '../../helpers/BaseApiAxios';
-import { useApiErrorHandler } from '../../helpers/ApiErrorHandler';
-import { useNavigate } from 'react-router-dom';
-import { TIMEOUT_MILLIS } from '../../constants/Constants';
+import { NAVIGATE_PATHS, SERVICE_PATHS } from '../../../constants/Paths';
+import BaseApiAxios from '../../../helpers/BaseApiAxios';
+import { useApiErrorHandler } from '../../../helpers/ApiErrorHandler';
+import { TIMEOUT_MILLIS } from '../../../constants/Constants';
 
 const ForgotPassword: React.FC = () => {
     const { handleApiError } = useApiErrorHandler();

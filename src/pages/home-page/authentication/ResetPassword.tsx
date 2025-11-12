@@ -11,10 +11,10 @@ import {
     CircularProgress,
 } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import BaseApiAxios from '../../helpers/BaseApiAxios';
-import { SERVICE_PATHS, NAVIGATE_PATHS } from '../../constants/Paths';
-import { useApiErrorHandler } from '../../helpers/ApiErrorHandler';
-import { TIMEOUT_MILLIS } from '../../constants/Constants';
+import BaseApiAxios from '../../../helpers/BaseApiAxios';
+import { SERVICE_PATHS, NAVIGATE_PATHS } from '../../../constants/Paths';
+import { useApiErrorHandler } from '../../../helpers/ApiErrorHandler';
+import { TIMEOUT_MILLIS } from '../../../constants/Constants';
 
 const ResetPassword: React.FC = () => {
     const { handleApiError } = useApiErrorHandler();

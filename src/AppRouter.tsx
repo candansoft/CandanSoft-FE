@@ -1,45 +1,43 @@
 import React, { type ReactNode } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { NAVIGATE_PATHS } from "./constants/Paths";
-import Login from "./pages/authentication/Login";
-import Register from "./pages/authentication/Register";
-import Logout from "./pages/authentication/Logout";
-import ForgotPassword from "./pages/authentication/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword";
-import VerifyAccount from "./pages/authentication/VerifyAccount";
 import Dashboard from "./pages/Dashboard";
-import ResetPassword from "./pages/authentication/ResetPassword";
 import SystemParameters from "./pages/SystemParameters";
 import { useAuthentication } from "./contexts/authentication/AuthenticationContext";
 import Layout from "./components/Layout";
-import ERBuilder from "./pages/project-generator/ERBuilder";
+import Login from "./pages/home-page/authentication/Login";
+import Register from "./pages/home-page/authentication/Register";
+import ForgotPassword from "./pages/home-page/authentication/ForgotPassword";
+import ResetPassword from "./pages/home-page/authentication/ResetPassword";
+import VerifyAccount from "./pages/home-page/authentication/VerifyAccount";
+import { Logout } from "@mui/icons-material";
+import HomePage from "./pages/home-page/HomePage";
 
 interface RouteWithAuthorizationProps {
     element: React.ReactNode;
 }
 
-
-export const RouteWithAuthorization: React.FC<RouteWithAuthorizationProps> = ({ element }) => {
-    const { jwtToken, sessionUser } = useAuthentication();
-    if (!jwtToken) return <Navigate to="/login" />;
-
-    if (sessionUser?.passwordValidUntil && new Date(sessionUser.passwordValidUntil) < new Date()) {
-        return <ChangePassword />;
-    }
-
-    return <Layout>{element}</Layout>; // tüm private sayfalara header/footer
-};
-
 interface RouteWithoutAuthorizationProps {
     children: ReactNode;
 }
-
-const RouteWithoutAuthorization: React.FC<RouteWithoutAuthorizationProps> = ({ children }) => {
-    const { jwtToken } = useAuthentication();
-    return jwtToken ? <Navigate to="/dashboard" /> : children;
-};
-
 const AppRouter: React.FC = () => {
+    const { jwtToken, sessionUser } = useAuthentication();
+
+    const RouteWithAuthorization: React.FC<RouteWithAuthorizationProps> = ({ element }) => {
+        if (!jwtToken) return <Navigate to="/login" />;
+
+        if (sessionUser?.passwordValidUntil && new Date(sessionUser.passwordValidUntil) < new Date()) {
+            return <ChangePassword />;
+        }
+
+        return <Layout>{element}</Layout>; // tüm private sayfalara header/footer
+    };
+
+    const RouteWithoutAuthorization: React.FC<RouteWithoutAuthorizationProps> = ({ children }) => {
+        return jwtToken ? <Navigate to="/dashboard" /> : children;
+    };
+
     return (
         <Router>
             <Routes>
@@ -64,6 +62,10 @@ const AppRouter: React.FC = () => {
                     path={NAVIGATE_PATHS.VERIFY_ACCOUNT}
                     element={<RouteWithoutAuthorization><VerifyAccount /></RouteWithoutAuthorization>}
                 />
+                <Route
+                    path={NAVIGATE_PATHS.HOMEPAGE}
+                    element={<RouteWithoutAuthorization><HomePage /></RouteWithoutAuthorization>}
+                />
 
                 {/* Private routes */}
                 <Route
@@ -79,16 +81,12 @@ const AppRouter: React.FC = () => {
                     element={<RouteWithAuthorization element={<SystemParameters />}></RouteWithAuthorization>}
                 />
                 <Route
-                    path={NAVIGATE_PATHS.ER_BUILDER}
-                    element={<RouteWithAuthorization element={<ERBuilder />}></RouteWithAuthorization>}
-                />
-                <Route
                     path={NAVIGATE_PATHS.LOGOUT}
                     element={<RouteWithAuthorization element={<Logout />}></RouteWithAuthorization>}
                 />
 
                 {/* Catch-all */}
-                <Route path="*" element={<Navigate to={NAVIGATE_PATHS.LOGIN} />} />
+                <Route path="*" element={<Navigate to={NAVIGATE_PATHS.HOMEPAGE} />} />
             </Routes>
         </Router>
     );

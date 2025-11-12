@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Paper, Typography, CircularProgress, Button } from '@mui/material';
 import { useSearchParams, Link as RouterLink, useNavigate } from 'react-router-dom';
-import BaseApiAxios from '../../helpers/BaseApiAxios';
-import { NAVIGATE_PATHS, SERVICE_PATHS } from '../../constants/Paths';
-import { useApiErrorHandler } from '../../helpers/ApiErrorHandler';
-import { TIMEOUT_MILLIS } from '../../constants/Constants';
+import BaseApiAxios from '../../../helpers/BaseApiAxios';
+import { NAVIGATE_PATHS, SERVICE_PATHS } from '../../../constants/Paths';
+import { useApiErrorHandler } from '../../../helpers/ApiErrorHandler';
+import { TIMEOUT_MILLIS } from '../../../constants/Constants';
 
 const VerifyAccount: React.FC = () => {
     const { handleApiError } = useApiErrorHandler();

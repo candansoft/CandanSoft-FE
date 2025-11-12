@@ -11,10 +11,10 @@ import {
     Alert,
     CircularProgress,
 } from '@mui/material';
-import BaseApiAxios from '../../helpers/BaseApiAxios';
-import { SERVICE_PATHS } from '../../constants/Paths';
-import { useApiErrorHandler } from '../../helpers/ApiErrorHandler';
-import GoogleLoginButton from '../../components/GoogleLoginButton';
+import BaseApiAxios from '../../../helpers/BaseApiAxios';
+import { SERVICE_PATHS } from '../../../constants/Paths';
+import { useApiErrorHandler } from '../../../helpers/ApiErrorHandler';
+import GoogleLoginButton from '../../../components/GoogleLoginButton';
 
 const Register: React.FC = () => {
     const { handleApiError } = useApiErrorHandler();
