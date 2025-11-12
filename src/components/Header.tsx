@@ -25,7 +25,7 @@ import { useTheme } from "@mui/material/styles";
 import { ThemeContext } from "../contexts/theme/ThemeContext";
 
 const Header: React.FC = () => {
-    const { sessionUser } = useAuthentication();
+    const { jwtToken, sessionUser } = useAuthentication();
     const navigate = useNavigate();
     const [drawerOpen, setDrawerOpen] = useState(false);
     const theme = useTheme();
@@ -33,17 +33,32 @@ const Header: React.FC = () => {
 
     return (
         <>
-            <AppBar position="static" color="primary" elevation={2}>
-                <Toolbar style={{ padding: 0 }}
-                    sx={{ display: "flex", justifyContent: "space-between" }}>
-                    {/* PROJECT_NAME (sol) */}
-                    <Button onClick={() => setDrawerOpen(true)}
+            {/* 🔝 NAVBAR */}
+            <AppBar
+                position="sticky"
+                color="transparent"
+                elevation={0}
+                sx={{
+                    backdropFilter: "blur(10px)",
+                    backgroundColor: colorMode.mode === "dark"
+                        ? "rgba(0,0,0,0.3)"
+                        : "rgba(255,255,255,0.3)",
+                }}
+            >
+                <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 4, py: 1 }}>
+                    {/* Sol taraf: Logo / Anasayfa */}
+                    <Button onClick={() => {
+                        if (jwtToken) {
+                            setDrawerOpen(true);
+                        } else {
+                            navigate(NAVIGATE_PATHS.HOMEPAGE);
+                        }
+                    }}
                         startIcon={<ListOutlined />}
                         sx={{
                             fontWeight: 'bold',
                             fontSize: '1.25rem', // Typography h6 ile uyumlu 
                             color: 'inherit', // yazı rengi değişmesin 
-                            height: 60,
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
                             textTransform: 'none',
@@ -56,30 +71,64 @@ const Header: React.FC = () => {
                         {PROJECT_NAME}
                     </Button>
 
-                    {/* Sağ taraf */}
-                    <Box display="flex" alignItems="center" gap={1}>
+                    {/* Sağ taraf: Butonlar */}
+                    <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
                         <IconButton
                             onClick={colorMode.toggleColorMode}
                             color="inherit"
-                            sx={{ ml: 1 }}
+                            sx={{ ml: 1, transition: 'transform 0.3s', '&:hover': { transform: 'rotate(20deg)' } }}
                         >
-                            {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
+                            {colorMode.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
                         </IconButton>
+                        {!jwtToken ? <>
+                            <Button
+                                color="inherit"
+                                href={NAVIGATE_PATHS.LOGIN}
+                                sx={{ textTransform: "none", "&:hover": { color: "primary.light", backgroundColor: "rgba(66, 165, 245, 0.1)" } }}
+                            >
+                                Giriş Yap
+                            </Button>
 
-                        <Button
-                            href={NAVIGATE_PATHS.LOGOUT}
-                            color="inherit"
-                            endIcon={<LogoutIcon />}
-                            sx={{
-                                textTransform: "none",
-                                height: 60,
-                                borderTopRightRadius: 0,
-                                borderBottomRightRadius: 0,
-                                "&:hover": { backgroundColor: "rgba(255,255,255,0.1)" },
-                            }}
-                        >
-                            Logout
-                        </Button>
+                            <Button
+                                color="primary"
+                                variant="contained"
+                                href={NAVIGATE_PATHS.REGISTER}
+                                sx={{
+                                    textTransform: "none",
+                                    borderRadius: 3,
+                                    px: 3,
+                                    py: 1,
+                                    boxShadow: "0 4px 15px rgba(66, 165, 245, 0.3)",
+                                    "&:hover": {
+                                        background: "linear-gradient(90deg,#42a5f5,#26c6da)",
+                                        boxShadow: "0 6px 20px rgba(66, 165, 245, 0.5)",
+                                    },
+                                }}
+                            >
+                                Kaydol
+                            </Button>
+                        </>
+                            :
+                            <>
+                                <Button
+                                    color="secondary"
+                                    variant="contained"
+                                    href={NAVIGATE_PATHS.LOGOUT}
+                                    sx={{
+                                        textTransform: "none",
+                                        borderRadius: 3,
+                                        px: 3,
+                                        py: 1,
+                                        boxShadow: "0 4px 15px rgba(66, 165, 245, 0.3)",
+                                        "&:hover": {
+                                            background: "linear-gradient(90deg,#42a5f5,#26c6da)",
+                                            boxShadow: "0 6px 20px rgba(66, 165, 245, 0.5)",
+                                        },
+                                    }}>
+                                    Çıkış
+                                </Button>
+                            </>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>
@@ -145,19 +194,6 @@ const Header: React.FC = () => {
                             >
                                 <ListItemText primary="System Parameters" />
                             </ListItem>
-
-                            <List>
-                                <ListItem
-                                    key='erBuilder'
-                                    component='button'
-                                    onClick={() => {
-                                        navigate(NAVIGATE_PATHS.ER_BUILDER);
-                                        setDrawerOpen(false);
-                                    }}
-                                >
-                                    <ListItemText primary="ER Builder" />
-                                </ListItem>
-                            </List>
                         </Box>
                     </>
                 )}

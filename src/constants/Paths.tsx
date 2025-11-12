@@ -10,7 +10,6 @@ export const NAVIGATE_PATHS = {
     VERIFY_ACCOUNT: "/verifyAccount",
     PARAMETER_MANAGEMENT: "/parameterManagement",
     SYSTEM_PARAMETERS: "/systemParameters",
-    ER_BUILDER: "/ERBuilder"
 }
 
 export const SERVICE_PATHS = {

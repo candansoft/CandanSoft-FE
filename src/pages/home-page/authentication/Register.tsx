@@ -12,7 +12,7 @@ import {
     CircularProgress,
 } from '@mui/material';
 import BaseApiAxios from '../../../helpers/BaseApiAxios';
-import { SERVICE_PATHS } from '../../../constants/Paths';
+import { NAVIGATE_PATHS, SERVICE_PATHS } from '../../../constants/Paths';
 import { useApiErrorHandler } from '../../../helpers/ApiErrorHandler';
 import GoogleLoginButton from '../../../components/GoogleLoginButton';
 
@@ -146,7 +146,7 @@ const Register: React.FC = () => {
                 <Box mt={3} textAlign="center">
                     <Typography variant="body2">
                         Already have an account?{' '}
-                        <Link href="/login" underline="hover">
+                        <Link href={NAVIGATE_PATHS.LOGIN} underline="hover">
                             Login
                         </Link>
                     </Typography>

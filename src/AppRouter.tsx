@@ -11,8 +11,8 @@ import Register from "./pages/home-page/authentication/Register";
 import ForgotPassword from "./pages/home-page/authentication/ForgotPassword";
 import ResetPassword from "./pages/home-page/authentication/ResetPassword";
 import VerifyAccount from "./pages/home-page/authentication/VerifyAccount";
-import { Logout } from "@mui/icons-material";
 import HomePage from "./pages/home-page/HomePage";
+import Logout from "./pages/home-page/authentication/Logout";
 
 interface RouteWithAuthorizationProps {
     element: React.ReactNode;
@@ -25,7 +25,7 @@ const AppRouter: React.FC = () => {
     const { jwtToken, sessionUser } = useAuthentication();
 
     const RouteWithAuthorization: React.FC<RouteWithAuthorizationProps> = ({ element }) => {
-        if (!jwtToken) return <Navigate to="/login" />;
+        if (!jwtToken) return <Navigate to={NAVIGATE_PATHS.LOGIN} />;
 
         if (sessionUser?.passwordValidUntil && new Date(sessionUser.passwordValidUntil) < new Date()) {
             return <ChangePassword />;
@@ -35,7 +35,7 @@ const AppRouter: React.FC = () => {
     };
 
     const RouteWithoutAuthorization: React.FC<RouteWithoutAuthorizationProps> = ({ children }) => {
-        return jwtToken ? <Navigate to="/dashboard" /> : children;
+        return jwtToken ? <Navigate to={NAVIGATE_PATHS.DASHBOARD} /> : <Layout>{children}</Layout>;
     };
 
     return (
@@ -82,7 +82,7 @@ const AppRouter: React.FC = () => {
                 />
                 <Route
                     path={NAVIGATE_PATHS.LOGOUT}
-                    element={<RouteWithAuthorization element={<Logout />}></RouteWithAuthorization>}
+                    element={<Logout />}
                 />
 
                 {/* Catch-all */}

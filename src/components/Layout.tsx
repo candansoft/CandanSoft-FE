@@ -37,6 +37,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                     {warning}
                 </Alert>
             </Snackbar>
+
             <Footer />
         </Box>
     );

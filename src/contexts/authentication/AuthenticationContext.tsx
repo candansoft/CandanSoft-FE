@@ -11,6 +11,7 @@ interface AuthenticationContextType {
     sessionUser: User | null;
     initSessionUser: () => void;
     parameters: Parameter[];
+    initParameters: () => void;
 }
 
 const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
@@ -20,16 +21,11 @@ export const AuthenticationProvider: React.FC<{ children: ReactNode }> = ({ chil
     const [sessionUser, setSessionUser] = useState<User | null>(null);
     const [parameters, setParameters] = useState<Parameter[]>([]);
 
-    useEffect(() => {
-        if (jwtToken) {
-            initSessionUser();
-            initParameters();
-        }
-    }, [jwtToken]);
-
     const fillToken = (newToken: string) => {
         localStorage.setItem("jwtToken", newToken);
         setJwtToken(newToken);
+        initSessionUser();
+        initParameters();
     };
 
     const clearToken = () => {
@@ -49,7 +45,7 @@ export const AuthenticationProvider: React.FC<{ children: ReactNode }> = ({ chil
     }
 
     return (
-        <AuthenticationContext.Provider value={{ jwtToken, fillToken, clearToken, sessionUser, initSessionUser, parameters }}>
+        <AuthenticationContext.Provider value={{ jwtToken, fillToken, clearToken, sessionUser, initSessionUser, parameters, initParameters }}>
             {children}
         </AuthenticationContext.Provider>
     );

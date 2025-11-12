@@ -1,22 +1,14 @@
 import React, { useContext } from "react";
 import {
-    AppBar,
-    Toolbar,
     Typography,
     Button,
     Box,
     Container,
-    Grid,
-    Link,
-    IconButton,
+    Grid
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { styled, useTheme } from "@mui/system";
-import { Link as RouterLink } from "react-router-dom";
-import { NAVIGATE_PATHS } from "../../constants/Paths";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { ThemeContext } from "../../contexts/theme/ThemeContext";
-import { PROJECT_NAME } from "../../constants/Constants";
 
 interface FloatingOrb {
     size: number;
@@ -93,84 +85,6 @@ export default function HomePage() {
 
     return (
         <>
-            {/* 🔝 NAVBAR */}
-            <AppBar
-                position="sticky"
-                color="transparent"
-                elevation={0}
-                sx={{
-                    backdropFilter: "blur(10px)",
-                    backgroundColor: colorMode.mode === "dark"
-                        ? "rgba(0,0,0,0.3)"
-                        : "rgba(255,255,255,0.3)",
-                }}
-            >
-                <Toolbar sx={{ display: "flex", justifyContent: "space-between", px: 4, py: 1 }}>
-                    {/* Sol taraf: Logo / Anasayfa */}
-                    <Typography
-                        variant="h6"
-                        component={RouterLink}
-                        to="/"
-                        sx={{
-                            textDecoration: "none",
-                            fontWeight: "bold",
-                            fontSize: "1.5rem",
-                            color: "primary.main",
-                            "&:hover": { opacity: 0.8, transform: "scale(1.05)" },
-                            transition: "all 0.3s ease",
-                        }}
-                    >
-                        {PROJECT_NAME}
-                    </Typography>
-
-                    {/* Sağ taraf: Butonlar */}
-                    <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-                        <IconButton
-                            onClick={colorMode.toggleColorMode}
-                            color="inherit"
-                            sx={{ ml: 1, transition: 'transform 0.3s', '&:hover': { transform: 'rotate(20deg)' } }}
-                        >
-                            {colorMode.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
-                        </IconButton>
-                        <Button
-                            color="inherit"
-                            component={RouterLink}
-                            to="/apps"
-                            sx={{ textTransform: "none", "&:hover": { color: "primary.light" } }}
-                        >
-                            Uygulamalar
-                        </Button>
-
-                        <Button
-                            color="inherit"
-                            href={NAVIGATE_PATHS.LOGIN}
-                            sx={{ textTransform: "none", "&:hover": { color: "primary.light", backgroundColor: "rgba(66, 165, 245, 0.1)" } }}
-                        >
-                            Giriş Yap
-                        </Button>
-
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            href={NAVIGATE_PATHS.REGISTER}
-                            sx={{
-                                textTransform: "none",
-                                borderRadius: 3,
-                                px: 3,
-                                py: 1,
-                                boxShadow: "0 4px 15px rgba(66, 165, 245, 0.3)",
-                                "&:hover": {
-                                    background: "linear-gradient(90deg,#42a5f5,#26c6da)",
-                                    boxShadow: "0 6px 20px rgba(66, 165, 245, 0.5)",
-                                },
-                            }}
-                        >
-                            Kaydol
-                        </Button>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-
             {/* 🧠 HERO */}
             <HeroSection>
                 <FloatingOrb
@@ -271,24 +185,6 @@ export default function HomePage() {
                         />
                     </Grid>
                 </Container>
-            </Box>
-
-            {/* 👣 FOOTER */}
-            <Box sx={{ bgcolor: colorMode.mode === "dark" ? "#000" : "#d4d4d46b", py: 4, textAlign: "center" }}>
-                <Typography variant="body2" color={colorMode.mode === "dark" ? "rgba(255,255,255,0.6)" : "rgba(0, 0, 0, 0.8)"}>
-                    © {new Date().getFullYear()} Candan Soft — Yazılımda Güven ve Güç
-                </Typography>
-                <Box sx={{ mt: 1 }}>
-                    <Link href="#" color="inherit" sx={{ mx: 1 }}>
-                        Gizlilik
-                    </Link>
-                    <Link href="#" color="inherit" sx={{ mx: 1 }}>
-                        Kullanım Şartları
-                    </Link>
-                    <Link href="#" color="inherit" sx={{ mx: 1 }}>
-                        İletişim
-                    </Link>
-                </Box>
             </Box>
         </>
     );

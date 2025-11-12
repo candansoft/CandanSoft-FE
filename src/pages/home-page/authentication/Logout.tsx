@@ -9,7 +9,7 @@ const Logout: React.FC = () => {
 
     useEffect(() => {
         clearToken();
-        navigate(NAVIGATE_PATHS.LOGIN);
+        navigate(NAVIGATE_PATHS.HOMEPAGE);
     }, []);
 
     return null;

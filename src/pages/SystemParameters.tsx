@@ -21,8 +21,10 @@ import { useNavigate } from "react-router-dom";
 import { ArrowBack, Save } from "@mui/icons-material";
 import { TIMEOUT_MILLIS } from "../constants/Constants";
 import { useNotification } from "../contexts/notification/NotificationContext";
+import { useAuthentication } from "../contexts/authentication/AuthenticationContext";
 
 const SystemParameters: React.FC = () => {
+    const { initParameters } = useAuthentication();
     const { setSuccess, setError } = useNotification();
     const navigate = useNavigate();
 
@@ -45,6 +47,7 @@ const SystemParameters: React.FC = () => {
                 parameterList: parameterList
             });
             setSuccess("Parameters updated successfully!");
+            initParameters();
             // 3 saniye sonra toast kapanacak
             setTimeout(() => {
                 setSuccess("");
